@@ -1,0 +1,173 @@
+RGL - 3D visualization device system for R using OpenGL
+=======================================================
+
+INTRODUCTION
+------------
+The RGL package is a visualization device system for R, using 
+OpenGL as the rendering backend. An rgl device at its core 
+is a real-time 3D engine written in C++. It provides an 
+interactive viewpoint navigation facility (mouse + wheel support)
+and an R programming interface.
+
+
+LICENSE
+-------
+The software is released under the GNU Public License. 
+See "COPYING" textfile for details.
+
+
+FEATURES
+--------
+- portable R Plug-in using OpenGL on MacOSX, Win32 and X11
+- R programming interface 
+- interactive viewpoint navigation
+- automatic data focus
+- geometry primitives: 
+  points, lines, triangles, quads, texts, point sprites
+- high-level geometry:
+  surface, spheres
+- up to 8 light sources
+- alpha-blending (transparency)
+- side-dependant fill-mode rendering (dots,wired and filled)
+- texture-mapping with mipmapping and environment mapping support
+- environmental effects:
+  fogging, background sphere
+- bounding box with axis ticks marks
+- undo operation:
+  shapes and light-sources are managed on type stacks,
+  where the top-most objects can be pop'ed, or any item specified by
+  an identifier can be removed
+
+
+PLATFORMS
+---------
+Mac OS X
+Windows 2000/XP/Vista
+Unix-derivatives
+
+
+BUILD TOOLS
+-----------
+R recommended tools (gcc toolchain)
+
+
+REQUIREMENTS
+------------
+Windowing System (osx/carbon, unix/x11 or win32)
+OpenGL Library 
+OpenGL Utility Library (GLU)
+
+
+OPTIONS
+-------
+libpng library version 1.0.4 or newer (pixmap import/export support)
+freetype library for resizable anti-aliased fonts
+
+
+BUILDING/INSTALLING FROM SOURCE PACKAGE
+---------------------------------------
+The R build tool is the primary tool to build the RGL package.
+
+
+BUILDING ON MICROSOFT WINDOWS
+-----------------------------
+
+Libpng support:
+
+Make sure bitmap dll has been built as described in the 
+R Build Instructions for Windows.
+
+These two files are needed:
+
+%R_HOME%\src\gnuwin32\bitmap\libpng\libpng.a
+%R_HOME%\bin\Rzlib.dll (or %R_HOME%\src\extra\zlib\libz.a, in older R versions)
+
+Freetype support:
+
+You need to obtain a Windows build of the Freetype library, version 2.3.5 or better.
+A version is available at http://gnuwin32.sourceforge.net/packages/freetype.htm.
+Set the environment variable LIB_FREETYPE to give the full path to the
+install directory.
+
+BUILDING ON UNIX-STYLE OS (MacOS X, Linux, FreeBSD, ... ) 
+---------------------------------------------------------
+
+The build is controlled by an autoconf configure script.
+You provide the options through the R CMD build/INSTALL command
+
+  e.g. 
+    $ R CMD INSTALL --configure-args="<configure args...>" rgl
+
+
+  COMMON UNIX-STYLE OS OPTIONS
+  ----------------------------
+
+  --with-gl-includes=<path>
+    GL C header files include path
+
+  --with-gl-libraries=<path>
+    GL library linkage path
+
+  --with-gl-prefix=<libprefix>
+    GL library prefix (e.g. Mesa)
+  
+  --disable-libpng
+    disable libpng support
+
+  --with-libpng-prefix=<install location>
+    force LibPNG library install prefix (e.g. /usr/local)
+
+  --disable-libpng-config
+    explicitly disable libpng-config
+  
+  --disable-libpng-dynamic
+    use static libpng library
+    
+You may find that your distro doesn't have all necessary development
+libraries installed:  read the error messages for hints!  This line
+has been reported to be sufficient on FC 5 or 6:
+
+ yum install mesa-libGL-devel mesa-libGLU-devel libpng-devel
+
+
+
+  MAC OS X OPTIONS
+  ----------------
+
+  --disable-carbon
+    force a X11 port
+
+
+  X11 WINDOWING SYSTEM OPTIONS
+  ----------------------------
+
+  --x-includes=<path>
+    X11 C header files include path
+
+  --x-libraries=<path>
+    X11 library linkage path
+
+
+FIRST DEMOS: LOADING LIBRARY AND RUNNING DEMONSTRATIONS
+-------------------------------------------------------
+
+> library(rgl)
+> demo(rgl)
+
+
+CREDITS
+-------
+Daniel Adler <dadler@uni-goettingen.de>
+Duncan Murdoch <murdoch@stats.uwo.ca>
+Oleg Nenadic <onenadi@uni-goettingen.de>
+Simon Urbanek <simon.urbanek@math.uni-augsburg.de>
+Ming Chen <mchen34@uwo.ca>
+Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+Ben Bolker <bolker@zoo.ufl.edu>
+Gabor Csardi <csardi@rmki.kfki.hu>
+
+
+WEBSITE
+-------
+http://rgl.neoscientists.org
+

@@ -55,7 +55,7 @@ public:
   /**
    * this shows how the shape would be sized in the given context
    **/
-  virtual AABox& getBoundingBox(Scene* scene) { return boundingBox; }
+  virtual AABox& getBoundingBox(Subscene* subscene) { return boundingBox; }
   
   /**
    * obtain material
@@ -64,7 +64,7 @@ public:
   
   const bool getIgnoreExtent() const { return ignoreExtent; }
 
-  virtual void getShapeName(char* buffer, int buflen) { strncpy(buffer, "shape", buflen); };
+  virtual void getTypeName(char* buffer, int buflen) { strncpy(buffer, "shape", buflen); };
   
   /**
    * invalidate display list

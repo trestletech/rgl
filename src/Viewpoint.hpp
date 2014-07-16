@@ -8,25 +8,20 @@
 
 namespace rgl {
 
-class Viewpoint : public SceneNode
+class ModelViewpoint : public SceneNode
 {
 
 #define VIEWPOINT_MAX_ZOOM  10
 
 public:
 
-  Viewpoint(PolarCoord position=PolarCoord(0.0f,15.0f), float fov=90.0f, float zoom=1.0f, Vec3 in_scale=Vec3(1.0f, 1.0f, 1.0f), bool interactive=true);
-  Viewpoint(double* userMatrix, float fov=90.0f, float zoom=1.0f, Vec3 in_scale=Vec3(1.0f, 1.0f, 1.0f), bool interactive=true);
+  ModelViewpoint(PolarCoord position=PolarCoord(0.0f,15.0f), Vec3 in_scale=Vec3(1.0f, 1.0f, 1.0f), bool interactive=true);
+  ModelViewpoint(double* userMatrix, Vec3 in_scale=Vec3(1.0f, 1.0f, 1.0f), bool interactive=true);
   PolarCoord& getPosition();
   void        setPosition(const PolarCoord& position);
   void	      clearMouseMatrix();
-  float       getZoom(void) const; 
-  void        setZoom(const float zoom);
-  float       getFOV(void) const;
-  void        setFOV(const float in_fov);
-  void        setupFrustum(RenderContext* rctx, const Sphere& viewvolumeSphere);
-  void        setupTransformation(RenderContext* rctx, const Sphere& viewvolumeSphere);
-  void        setupOrientation(RenderContext* rctx) const;
+  void        setupTransformation(Vertex center);
+  void        setupOrientation() const;
   bool        isInteractive() const;
   void        updateMouseMatrix(Vertex dragStart,Vertex dragCurrent);
   void	      updateMouseMatrix(PolarCoord newpos);
@@ -38,17 +33,42 @@ public:
   void	      setScale(double* src);
   void 	      getPosition(double* dest);
   void        setPosition(double* src);
-  Frustum     frustum;
-  Vertex      getCOP(const Sphere& viewvolumeSphere) const;
+  virtual void getTypeName(char* buffer, int buflen) { strncpy(buffer, "modelviewpoint", buflen); };
+
   Vertex      scale;
   bool        scaleChanged;
 private:
   PolarCoord  position;
-  float       fov;
-  float       zoom;
   bool        interactive;
+public:
   GLdouble    userMatrix[16], mouseMatrix[16];
 };
+
+class UserViewpoint : public SceneNode
+{
+
+#define VIEWPOINT_MAX_ZOOM  10
+
+public:
+
+  UserViewpoint(float fov=90.0f, float zoom=1.0f);
+  float       getZoom(void) const; 
+  void        setZoom(const float zoom);
+  float       getFOV(void) const;
+  void        setFOV(const float in_fov);
+  void        setupFrustum(RenderContext* rctx, const Sphere& viewvolumeSphere);
+  Vertex      getObserver();
+  void	      setObserver(bool automatic, Vertex eye);
+  void	      setupViewer();
+  virtual void getTypeName(char* buffer, int buflen) { strncpy(buffer, "userviewpoint", buflen); };
+  Frustum     frustum;
+private:
+  float       fov;
+  float       zoom;
+  bool        viewerInScene;
+  Vertex      eye;
+};
+
 
 } // namespace rgl 
 

@@ -17,21 +17,24 @@ enum TypeID {
   SHAPE=1, 
   LIGHT, 
   BBOXDECO, 
-  VIEWPOINT, 
-  BACKGROUND 
+  USERVIEWPOINT, 
+  BACKGROUND,
+  SUBSCENE,
+  MODELVIEWPOINT
 };
 */
 
 #define SHAPE 1
 #define LIGHT 2
 #define BBOXDECO 3
-#define VIEWPOINT 4
+#define USERVIEWPOINT 4
 #define BACKGROUND 6  // 5 was used for the material
+#define SUBSCENE 7
+#define MODELVIEWPOINT 8
+#define MAX_TYPE 8
 
 typedef unsigned int TypeID;
 typedef int ObjID;
-
-#define BBOXID 1
 
 /* Possible attributes to request */
 
@@ -65,6 +68,8 @@ public:
   virtual int getAttributeCount(AABox& bbox, AttribID attrib) { return 0; }
   virtual void getAttribute(AABox& bbox, AttribID attrib, int first, int count, double* result) { return; }
   virtual String  getTextAttribute(AABox& bbox, AttribID attrib, int index) { return String(0, NULL); }
+  virtual void getTypeName(char* buffer, int buflen) = 0;
+
 protected:
   SceneNode(const TypeID in_typeID) : typeID(in_typeID)
   {  objID = nextID++; };

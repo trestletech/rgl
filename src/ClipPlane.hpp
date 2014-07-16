@@ -1,7 +1,6 @@
 #ifndef CLIPPLANE_HPP
 #define CLIPPLANE_HPP
 
-#include "scene.h"
 #include "geom.hpp"
 #include "Shape.hpp"
 #include "PrimitiveSet.hpp"
@@ -27,7 +26,7 @@ public:
   /**
    * tell type.
    **/
-  virtual void getShapeName(char* buffer, int buflen) { strncpy(buffer, "clipplanes", buflen); };
+  virtual void getTypeName(char* buffer, int buflen) { strncpy(buffer, "clipplanes", buflen); };
   
   virtual void renderBegin(RenderContext* renderContext);
   

@@ -38,7 +38,7 @@ public:
    * Spheres appear as spheres, so their bbox depends on scaling
    **/
    
-  virtual AABox& getBoundingBox(Scene* scene);
+  virtual AABox& getBoundingBox(Subscene* subscene);
 
 
   /**
@@ -56,7 +56,7 @@ public:
    **/
   void drawEnd(RenderContext* renderContext);
 
-  virtual void getShapeName(char* buffer, int buflen) { strncpy(buffer, "spheres", buflen); };
+  virtual void getTypeName(char* buffer, int buflen) { strncpy(buffer, "spheres", buflen); };
 
 };
 

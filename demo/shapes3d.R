@@ -4,29 +4,25 @@ cone3d <- function(base=c(0,0,0),tip=c(0,0,1),rad=1,n=30,draw.base=TRUE,qmesh=FA
   ax <- tip-base
   if (missing(trans) && !rgl.cur()) trans <- diag(4)
   ### is there a better way?
+  # I have a bugfix, but don't know if it is complete as didn't find testcases
+  prodVec<-  function(a,b) {
+    c1<-a[2] * b[3] - a[3] * b[2]
+    c2<-a[3] * b[1] - a[1] * b[3]
+    c3<-a[1] * b[2] - a[2] * b[1]
+    return(cbind(c1,c2,c3))
+  }
   if (ax[1]!=0) {
     p1 <- c(-ax[2]/ax[1],1,0)
     p1 <- p1/sqrt(sum(p1^2))
-    if (p1[1]!=0) {
-      p2 <- c(-p1[2]/p1[1],1,0)
-      p2[3] <- -sum(p2*ax)
-      p2 <- p2/sqrt(sum(p2^2))
-    } else {
-      p2 <- c(0,0,1)
-    }
   } else if (ax[2]!=0) {
     p1 <- c(0,-ax[3]/ax[2],1)
     p1 <- p1/sqrt(sum(p1^2))
-    if (p1[1]!=0) {
-      p2 <- c(0,-p1[3]/p1[2],1)
-      p2[3] <- -sum(p2*ax)
-      p2 <- p2/sqrt(sum(p2^2))
-    } else {
-      p2 <- c(1,0,0)
-    }
   } else {
-    p1 <- c(0,1,0); p2 <- c(1,0,0)
+    p1 <- c(0,1,0);
   }
+  p2 <- prodVec(ax,p1)    
+  p2 <- p2/sqrt(sum(p2^2))
+  
   degvec <- seq(0,2*pi,length=n+1)[-1]
   ecoord2 <- function(theta) {
     base+rad*(cos(theta)*p1+sin(theta)*p2)
